@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>حمایت از Glistro</title>
+<style>
+  body {
+    background: #0a2f6d; /* رنگ آبی تیره */
+    color: #cce4f7;
+    font-family: Tahoma, sans-serif;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  h1 {
+    color: #0091ea; /* آبی روشن */
+  }
+  p {
+    font-size: 1.2rem;
+    margin: 20px 0 40px;
+  }
+  input, textarea {
+    width: 80%;
+    max-width: 400px;
+    border-radius: 8px;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    resize: none;
+  }
+  input[type="email"] {
+    height: 40px;
+  }
+  button {
+    background-color: #2196f3;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #1769aa;
+  }
+  .message {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  .success {
+    color: #81c784;
+  }
+  .error {
+    color: #ef5350;
+  }
+</style>
+</head>
+<body>
+  <h1>حمایت از Glistro</h1>
+  <p>فعلاً امکان دریافت دونیت واقعی نیست، ولی پیام حمایتی شما انرژی زیادی به من میده! 💙</p>
+
+  <form id="supportForm" action="https://formspree.io/f/xwpojebd" method="POST">
+    <input type="email" name="email" placeholder="ایمیل شما" required />
+    <textarea name="message" placeholder="پیام حمایتی خودتو اینجا بنویس..." required></textarea>
+    <br />
+    <button type="submit">ارسال پیام حمایت</button>
+  </form>
+  
+  <p class="message" id="responseMsg"></p>
+
+<script>
+  const form = document.getElementById('supportForm');
+  const responseMsg = document.getElementById('responseMsg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    responseMsg.textContent = '';
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' },
+      });
+
+      if (response.ok) {
+        responseMsg.textContent = 'مرسی که حمایت کردی! ❤️ پیام تو به من رسید.';
+        responseMsg.className = 'message success';
+        form.reset();
+      } else {
+        responseMsg.textContent = 'ارسال پیام موفقیت‌آمیز نبود، لطفاً دوباره تلاش کن.';
+        responseMsg.className = 'message error';
+      }
+    } catch (error) {
+      responseMsg.textContent = 'مشکلی پیش اومد، لطفاً اینترنتت رو چک کن.';
+      responseMsg.className = 'message error';
+    }
+  });
+</script>
+
+</body>
+</html>
